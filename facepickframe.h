@@ -10,6 +10,7 @@
 #include <QCamera>
 #include <QVideoWidget>
 #include <QCameraViewfinderSettings>
+#include <QVideoProbe>
 
 #include "database.h"
 #include "traindialog.h"
@@ -31,6 +32,12 @@ private:
     Ui::FacePickFrame *ui;
     QWidget *mainWindow;
     QCamera *camera;
+    TrainThread *trainThread;
+    TrainDialog *trainDialog;
+    QVideoProbe *probe;
+
+private slots:
+    void trainFinished();
 
 protected:
     void closeEvent(QCloseEvent *e) override;

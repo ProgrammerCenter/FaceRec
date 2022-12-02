@@ -50,3 +50,10 @@ Database::~Database() {
     this->conn->close();
     delete conn;
 }
+
+Database* Database::getInstace() {
+    if (instance == nullptr) {
+        instance = new Database();
+    }
+    return instance;
+}

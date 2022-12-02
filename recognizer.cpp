@@ -57,3 +57,10 @@ Recognizer::~Recognizer () {
     delete recoginzer;
     delete detector;
 }
+
+Recognizer *Recognizer::getInstance() {
+    if (Recognizer::instance == nullptr) {
+        Recognizer::instance = new Recognizer();
+    }
+    return Recognizer::instance;
+}

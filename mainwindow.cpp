@@ -5,8 +5,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    this->database = new Database();
-    this->recognizer = new Recognizer();
+    Database::getInstace();
+    Recognizer::getInstance();
     ui->setupUi(this);
     this->facePickFrame = new FacePickFrame(this, nullptr);
     this->faceRecFrame = new FaceRecFrame(this, nullptr);

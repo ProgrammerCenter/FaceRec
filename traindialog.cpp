@@ -6,6 +6,7 @@ TrainDialog::TrainDialog(QWidget *parent) :
     ui(new Ui::TrainDialog)
 {
     ui->setupUi(this);
+    this->setModal(true);
 }
 
 void TrainDialog::changeProgress(int n) {

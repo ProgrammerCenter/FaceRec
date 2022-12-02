@@ -14,13 +14,16 @@ using namespace cv::face;
 class Recognizer
 {
 public:
-    Recognizer();
     ~Recognizer();
     Mat faceDetect(Mat inp);
     int recognize(Mat face, double &confidence);
     void trainModel(vector<Mat> faces, vector<int> ids);
+    static Recognizer *getInstance();
 
 private:
+    Recognizer();
+
+    static Recognizer *instance;
     string modelPath = "model.yml";
     FaceRecognizer *recoginzer;
     CascadeClassifier *detector;

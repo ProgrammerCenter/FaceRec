@@ -30,12 +30,14 @@ typedef struct {
 class Database
 {
 public:
-    Database();
     ~Database();
     int newStudent(student student);
     void incrTimes(int sid);
+    static Database *getInstace();
 private:
+    Database();
     Connection *conn;
+    static Database *instance;
 };
 
 #endif // DATABASE_H
