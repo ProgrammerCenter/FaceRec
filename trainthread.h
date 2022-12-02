@@ -1,12 +1,13 @@
 #ifndef TRAINTHREAD_H
 #define TRAINTHREAD_H
 
+#include <QDebug>
+#include <QObject>
 #include <QThread>
 #include <QVideoFrame>
 
 #include <opencv2/opencv.hpp>
-
-#include "mainwindow.h"
+#include "recognizer.h"
 
 #define SAMPLES 100
 
@@ -16,10 +17,10 @@ class TrainThread : public QThread
 {
     Q_OBJECT
 public:
-    TrainThread(MainWindow *mainWindow, int sid, QWidget *parent = nullptr);
+    TrainThread(Recognizer *recognizer, int sid, QObject *parent = nullptr);
     ~TrainThread();
 private:
-    MainWindow *mainWindow;
+    Recognizer *recognizer;
     int sid;
     vector<Mat> faces;
     vector<int> labels;

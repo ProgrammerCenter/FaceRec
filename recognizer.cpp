@@ -20,11 +20,37 @@ Recognizer::Recognizer()
     }
 }
 
-Mat Recognizer::faceDetect(Mat inp) {}
+Mat Recognizer::faceDetect(Mat inp) {
+    vector<Rect> faceAreas;
+    detector->detectMultiScale(inp, faceAreas);
+    if (faceAreas.size() < 1) {
+        return Mat();
+    } else {
+        Rect face = faceAreas.at(0);
+        return inp(face);
+    }
+}
 
-int Recognizer::recognize(Mat face, double &confidence) {}
+int Recognizer::recognize(Mat face, double &confidence) {
+    if (!this->modelTrained) {
+        return -1;
+    }
+    int sid;
+    this->recoginzer->predict(face, sid, confidence);
+    if (confidence > 0.8) {
+        return -1;
+    }
+    return sid;
+}
 
-void Recognizer::trainModel(vector<Mat> faces, vector<int> ids) {}
+void Recognizer::trainModel(vector<Mat> faces, vector<int> ids) {
+    if (this->modelTrained) {
+        this->recoginzer->update(faces, ids);
+    } else {
+        this->recoginzer->train(faces, ids);
+        this->modelTrained = true;
+    }
+}
 
 Recognizer::~Recognizer () {
     this->recoginzer->save(this->modelPath);

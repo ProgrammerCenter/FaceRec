@@ -12,6 +12,7 @@
 #include "facepickframe.h"
 #include "facerecframe.h"
 #include "database.h"
+#include "recognizer.h"
 
 #include <sys/stat.h>
 #include <unistd.h>
@@ -32,21 +33,15 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    Mat faceDetect(Mat inp);
-    int recognize(Mat face, double &confidence);
-    void trainModel(vector<Mat> faces, vector<int> ids);
-
+    Recognizer *getRecognizer();
+    Database *getDatabase();
 
 private:
-    string modelPath = "model.yml";
     FacePickFrame *facePickFrame;
     FaceRecFrame *faceRecFrame;
     Ui::MainWindow *ui;
-
-    FaceRecognizer *recoginzer;
-    CascadeClassifier *detector;
-    bool modelTrained = false;
     Database *database;
+    Recognizer *recognizer;
 
 };
 #endif // MAINWINDOW_H

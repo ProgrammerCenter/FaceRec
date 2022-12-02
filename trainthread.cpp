@@ -1,9 +1,9 @@
 #include "trainthread.h"
 
-TrainThread::TrainThread(MainWindow *mainWindow, int sid, QWidget *parent) : QThread(parent)
+TrainThread::TrainThread(Recognizer *recognizer, int sid, QObject *parent) : QThread(parent)
 {
     this->sid = sid;
-    this->mainWindow = mainWindow;
+    this->recognizer = recognizer;
 }
 
 void TrainThread::run() {
@@ -12,7 +12,7 @@ void TrainThread::run() {
     while (this->sampleCollected < SAMPLES)
         ;
     emit changeState("训练模型中...");
-    mainWindow->trainModel(this->faces, this->labels);
+    recognizer->trainModel(this->faces, this->labels);
     emit finished();
 }
 
@@ -33,7 +33,7 @@ void TrainThread::onProbeFrameSlot(const QVideoFrame &frame) {
     Mat matTemp = Mat(h, w, CV_8UC2, cloneFrame.bits(), static_cast<size_t>(cloneFrame.bytesPerLine()));
     cvtColor(matTemp, matTemp, COLOR_YUV2RGB_YUYV);
     cvtColor(matTemp, grayImg, COLOR_BGR2GRAY);
-    Mat face = this->mainWindow->faceDetect(grayImg);
+    Mat face = this->recognizer->faceDetect(grayImg);
     if (face.empty()) {
         face.release();
         grayImg.release();
