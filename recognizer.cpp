@@ -1,5 +1,7 @@
 #include "recognizer.h"
 
+Recognizer *Recognizer::instance;
+
 Recognizer::Recognizer()
 {
     if (access("haarcascade_frontalface_default.xml",  F_OK) != 0) {

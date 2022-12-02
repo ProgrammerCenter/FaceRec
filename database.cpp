@@ -1,5 +1,7 @@
 #include "database.h"
 
+Database *Database::instance;
+
 Database::Database()
 {
     if (access("db.ini", F_OK) != 0) {
@@ -52,8 +54,8 @@ Database::~Database() {
 }
 
 Database* Database::getInstace() {
-    if (instance == nullptr) {
-        instance = new Database();
+    if (Database::instance == nullptr) {
+        Database::instance = new Database();
     }
-    return instance;
+    return Database::instance;
 }
